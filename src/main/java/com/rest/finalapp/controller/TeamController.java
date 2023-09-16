@@ -1,6 +1,13 @@
 package com.rest.finalapp.controller;
 
+import com.rest.finalapp.controller.exception.TeamNotFoundException;
+import com.rest.finalapp.domain.Team;
 import com.rest.finalapp.domain.dto.TeamDto;
+import com.rest.finalapp.mapper.TeamMapper;
+import com.rest.finalapp.service.DbService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -8,7 +15,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/v1/teams")
+@RequiredArgsConstructor
 public class TeamController {
+
+    private final DbService dbService;
+    private final TeamMapper teamMapper;
 
     @GetMapping
     public List<TeamDto> getTeams() {
@@ -16,22 +27,27 @@ public class TeamController {
     }
 
     @GetMapping(value = "{teamId}")
-    public TeamDto getTeam(@PathVariable Long teamId) {
-        return new TeamDto(1L, "smartfingers", "Teamwork makes the dream work", new ArrayList<>());
+    public ResponseEntity<TeamDto> getTeam(@PathVariable Long teamId) throws TeamNotFoundException {
+        return ResponseEntity.ok(teamMapper.mapToTeamDto(dbService.getTeam(teamId)));
     }
 
-    @PostMapping
-    public void createTeam(TeamDto teamDto) {
-
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<TeamDto> createTeam(@RequestBody TeamDto teamDto) {
+        Team team = teamMapper.mapToTeam(teamDto);
+        Team createdTeam = dbService.saveTeam(team);
+        return ResponseEntity.ok(teamMapper.mapToTeamDto(createdTeam));
     }
 
-    @PutMapping
-    public TeamDto updateTeam(TeamDto teamDto) {
-        return new TeamDto(1l, "smarterfingers", "There's no I in TEAM", new ArrayList<>());
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> updateTeam(@RequestBody TeamDto teamDto) {
+        Team team = teamMapper.mapToTeam(teamDto);
+        dbService.saveTeam(team);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping(value = "{teamId}")
-    public void deleteTeam(@PathVariable Long teamId) {
-
+    public ResponseEntity<Void> deleteTeam(@PathVariable Long teamId) {
+        dbService.deleteTeam(teamId);
+        return ResponseEntity.ok().build();
     }
 }

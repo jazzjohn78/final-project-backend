@@ -11,8 +11,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@Entity
-@Table(name = "USERS")
+@Entity(name = "USERS")
 public class User {
 
     @Id
@@ -28,8 +27,9 @@ public class User {
     @JoinColumn(name = "PLAYERS_ID")
     private Player player;
 
-    @Column(name = "TEAM_ID")
-    private Long teamId;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "TEAM_ID")
+    private Team team;
 
     public User(Long id, String name) {
         this.id = id;

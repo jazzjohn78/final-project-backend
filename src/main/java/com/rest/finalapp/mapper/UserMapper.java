@@ -1,6 +1,7 @@
 package com.rest.finalapp.mapper;
 
 import com.rest.finalapp.controller.exception.PlayerNotFoundException;
+import com.rest.finalapp.controller.exception.TeamNotFoundException;
 import com.rest.finalapp.domain.Player;
 import com.rest.finalapp.domain.User;
 import com.rest.finalapp.domain.dto.UserDto;
@@ -30,6 +31,14 @@ public class UserMapper {
             }
         }
 
+        if(userDto.getTeamId() != null) {
+            try {
+                user.setTeam(dbService.getTeam(userDto.getTeamId()));
+            } catch (TeamNotFoundException e) {
+
+            }
+        }
+
         return user;
 
     }
@@ -39,7 +48,7 @@ public class UserMapper {
                 user.getId(),
                 user.getName(),
                 user.getPlayer() != null ? user.getPlayer().getId() : null,
-                user.getTeamId()
+                user.getTeam() != null ? user.getTeam().getId() : null
         );
     }
 
