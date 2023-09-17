@@ -8,5 +8,4 @@ import lombok.Getter;
 public class PlayerRoleDto {
     private Long id;
     private String name;
-    private String description;
 }

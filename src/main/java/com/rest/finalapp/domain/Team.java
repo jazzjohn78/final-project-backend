@@ -4,10 +4,8 @@ import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -26,7 +24,13 @@ public class Team {
     @Column(name = "DESCRIPTION")
     private String description;
 
-    /*private List<Long> players;*/
+    @OneToMany(
+            targetEntity = Player.class,
+            mappedBy = "team",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
+    private List<Player> players = new ArrayList<>();
 
     public Team(Long id, String name, String description) {
         this.id = id;

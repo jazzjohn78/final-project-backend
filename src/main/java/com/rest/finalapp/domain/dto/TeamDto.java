@@ -11,5 +11,5 @@ public class TeamDto {
     private Long id;
     private String name;
     private String description;
-    /*private List<Long> players;*/
+    private List<Long> playersIds;
 }

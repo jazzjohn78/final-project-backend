@@ -10,5 +10,6 @@ public class PlayerDto {
     private String name;
     private String rank;
     private String role;
+    private Long teamId;
 
 }

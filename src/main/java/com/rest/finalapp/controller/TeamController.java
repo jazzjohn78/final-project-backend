@@ -22,8 +22,9 @@ public class TeamController {
     private final TeamMapper teamMapper;
 
     @GetMapping
-    public List<TeamDto> getTeams() {
-        return new ArrayList<>();
+    public ResponseEntity<List<TeamDto>> getTeams() {
+        List<Team> teams = dbService.getAllTeams();
+        return ResponseEntity.ok(teamMapper.mapToTeamDtoList(teams));
     }
 
     @GetMapping(value = "{teamId}")
@@ -50,4 +51,5 @@ public class TeamController {
         dbService.deleteTeam(teamId);
         return ResponseEntity.ok().build();
     }
+
 }
