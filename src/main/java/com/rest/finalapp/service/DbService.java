@@ -3,14 +3,8 @@ package com.rest.finalapp.service;
 import com.rest.finalapp.controller.exception.PlayerNotFoundException;
 import com.rest.finalapp.controller.exception.TeamNotFoundException;
 import com.rest.finalapp.controller.exception.UserNotFoundException;
-import com.rest.finalapp.domain.Player;
-import com.rest.finalapp.domain.PlayerRole;
-import com.rest.finalapp.domain.Team;
-import com.rest.finalapp.domain.User;
-import com.rest.finalapp.repository.PlayerRepository;
-import com.rest.finalapp.repository.PlayerRoleRepository;
-import com.rest.finalapp.repository.TeamRepository;
-import com.rest.finalapp.repository.UserRepository;
+import com.rest.finalapp.domain.*;
+import com.rest.finalapp.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +18,7 @@ public class DbService {
     private final PlayerRepository playerRepository;
     private final TeamRepository teamRepository;
     private final PlayerRoleRepository playerRoleRepository;
+    private final PlayerRankRepository playerRankRepository;
 
     public List<User> getAllUsers() {
         return userRepository.findAll();
@@ -70,5 +65,13 @@ public class DbService {
 
     public void saveRole(final PlayerRole playerRole) {
         playerRoleRepository.save(playerRole);
+    }
+
+    public List<PlayerRank> getAllPlayerRanks() {
+        return playerRankRepository.findAll();
+    }
+
+    public void saveRank(final PlayerRank playerRank) {
+        playerRankRepository.save(playerRank);
     }
 }
