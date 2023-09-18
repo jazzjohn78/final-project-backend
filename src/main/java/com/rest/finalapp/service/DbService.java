@@ -7,9 +7,11 @@ import com.rest.finalapp.domain.*;
 import com.rest.finalapp.domain.logs.LoginLog;
 import com.rest.finalapp.domain.logs.PlayerLog;
 import com.rest.finalapp.domain.logs.TeamLog;
+import com.rest.finalapp.domain.logs.UserLog;
 import com.rest.finalapp.domain.logs.repository.LoginLogRepository;
 import com.rest.finalapp.domain.logs.repository.PlayerLogRepository;
 import com.rest.finalapp.domain.logs.repository.TeamLogRepository;
+import com.rest.finalapp.domain.logs.repository.UserLogRepository;
 import com.rest.finalapp.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,8 @@ public class DbService {
     private final LoginLogRepository loginLogRepository;
     private final TeamLogRepository teamLogRepository;
     private final PlayerLogRepository playerLogRepository;
+
+    private final UserLogRepository userLogRepository;
 
     public List<User> getAllUsers() {
         return userRepository.findAll();
@@ -94,5 +98,9 @@ public class DbService {
 
     public void savePlayerLog(final PlayerLog playerLog) {
         playerLogRepository.save(playerLog);
+    }
+
+    public void saveUserLog(final UserLog userLog) {
+        userLogRepository.save(userLog);
     }
 }
