@@ -1,10 +1,8 @@
 package com.rest.finalapp.controller;
 
-import com.rest.finalapp.domain.logs.LoginErrorLog;
-import com.rest.finalapp.domain.logs.LoginLog;
+import com.rest.finalapp.controller.facade.LoginLogFacade;
 import com.rest.finalapp.domain.logs.PlayerLog;
 import com.rest.finalapp.domain.logs.TeamLog;
-import com.rest.finalapp.domain.logs.dto.LoginErrorLogDto;
 import com.rest.finalapp.domain.logs.dto.LoginLogDto;
 import com.rest.finalapp.domain.logs.dto.PlayerLogDto;
 import com.rest.finalapp.domain.logs.dto.TeamLogDto;
@@ -25,20 +23,14 @@ public class LogController {
 
     private final DbService dbService;
     private final LogMapper logMapper;
+    private final LoginLogFacade loginLogFacade;
 
     @PostMapping(value = "login", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> createLoginLog(@RequestBody LoginLogDto loginLogDto) {
-        LoginLog loginLog = logMapper.mapToLoginLog(loginLogDto);
-        dbService.saveLoginLog(loginLog);
+        loginLogFacade.processLoginLogCreation(loginLogDto);
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping(value = "login_error", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> createLoginErrorLog(@RequestBody LoginErrorLogDto loginErrorLogDto) {
-        LoginErrorLog loginErrorLog = logMapper.mapToLoginErrorLog(loginErrorLogDto);
-        dbService.saveLoginErrorLog(loginErrorLog);
-        return ResponseEntity.ok().build();
-    }
     @PostMapping(value = "team", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> createTeamLog(@RequestBody TeamLogDto teamLogDto) {
         TeamLog teamLog = logMapper.mapToTeamLog(teamLogDto);

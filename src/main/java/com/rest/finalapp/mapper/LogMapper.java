@@ -4,7 +4,6 @@ import com.rest.finalapp.domain.logs.LoginErrorLog;
 import com.rest.finalapp.domain.logs.LoginLog;
 import com.rest.finalapp.domain.logs.PlayerLog;
 import com.rest.finalapp.domain.logs.TeamLog;
-import com.rest.finalapp.domain.logs.dto.LoginErrorLogDto;
 import com.rest.finalapp.domain.logs.dto.LoginLogDto;
 import com.rest.finalapp.domain.logs.dto.PlayerLogDto;
 import com.rest.finalapp.domain.logs.dto.TeamLogDto;
@@ -22,12 +21,12 @@ public class LogMapper {
         );
     }
 
-    public LoginErrorLog mapToLoginErrorLog(final LoginErrorLogDto loginErrorLogDto) {
+    public LoginErrorLog mapToLoginErrorLog(final LoginLogDto loginLogDto) {
         return new LoginErrorLog(
-                loginErrorLogDto.getId(),
-                loginErrorLogDto.getDate(),
-                loginErrorLogDto.getUsername(),
-                loginErrorLogDto.getResult()
+                loginLogDto.getId(),
+                loginLogDto.getDate(),
+                loginLogDto.getUsername(),
+                loginLogDto.getResult()
         );
     }
 

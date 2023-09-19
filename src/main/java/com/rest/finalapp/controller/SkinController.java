@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class SkinController {
 
     private final SkinClient skinClient;
-    private final NbpClient nbpClient;
+    private final NbpClient nbpClient = NbpClient.getInstance();
 
     @GetMapping("random")
     public SkinDto getRandomSkin() {
