@@ -1,5 +1,6 @@
 package com.rest.finalapp.controller;
 
+import com.google.gson.Gson;
 import com.rest.finalapp.domain.PlayerRank;
 import com.rest.finalapp.domain.dto.PlayerRankDto;
 import com.rest.finalapp.mapper.PlayerRankMapper;
@@ -18,6 +19,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @SpringJUnitConfig
@@ -48,6 +50,24 @@ class PlayerRankControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(1)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].id", Matchers.is(1)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].name", Matchers.is("rank 1")));
+    }
+
+    @Test
+    void shouldCreatePlayerRank() throws Exception {
+        //Given
+        PlayerRankDto playerRankDto = new PlayerRankDto(1L, "rank 1");
+        PlayerRank playerRank = new PlayerRank(2L, "rank 2");
+        when(playerRankMapper.mapToPlayerRank(any(PlayerRankDto.class))).thenReturn(playerRank);
+        Gson gson = new Gson();
+        String jsonContent = gson.toJson(playerRankDto);
+        //When & Then
+        mockMvc
+                .perform(MockMvcRequestBuilders
+                        .post("/v1/playerRanks")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .characterEncoding("UTF-8")
+                        .content(jsonContent))
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
 }

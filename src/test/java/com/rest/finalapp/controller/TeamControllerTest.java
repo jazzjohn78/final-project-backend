@@ -1,5 +1,6 @@
 package com.rest.finalapp.controller;
 
+import com.google.gson.Gson;
 import com.rest.finalapp.domain.Team;
 import com.rest.finalapp.domain.dto.TeamDto;
 import com.rest.finalapp.mapper.TeamMapper;
@@ -15,7 +16,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -66,6 +66,45 @@ class TeamControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name", Matchers.is("team name 1")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.description", Matchers.is("team desc 1")));
+    }
+
+    @Test
+    void shouldCreateTeam() throws Exception {
+        //Given
+        TeamDto teamDto = new TeamDto(1L, "team name 1", "team desc 1", List.of());
+        Team team = new Team(2L, "team name 2", "team desc 2");
+        when(dbService.saveTeam(any(Team.class))).thenReturn(team);
+        when(teamMapper.mapToTeam(any(TeamDto.class))).thenReturn(team);
+        when(teamMapper.mapToTeamDto(any(Team.class))).thenReturn(teamDto);
+        Gson gson = new Gson();
+        String jsonContent = gson.toJson(teamDto);
+        //When & Then
+        mockMvc
+                .perform(MockMvcRequestBuilders
+                        .post("/v1/teams")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .characterEncoding("UTF-8")
+                        .content(jsonContent))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name", Matchers.is("team name 1")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.description", Matchers.is("team desc 1")));
+    }
+
+    @Test
+    void shouldUpdateTeam() throws Exception {
+        //Given
+        TeamDto teamDto = new TeamDto(1L, "team name 1", "team desc 1", List.of());
+        Team team = new Team(2L, "team name 2", "team desc 2");
+        when(teamMapper.mapToTeam(any(TeamDto.class))).thenReturn(team);
+        Gson gson = new Gson();
+        String jsonContent = gson.toJson(teamDto);
+        //When & Then
+        mockMvc
+                .perform(MockMvcRequestBuilders
+                        .put("/v1/teams")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .characterEncoding("UTF-8")
+                        .content(jsonContent))
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test

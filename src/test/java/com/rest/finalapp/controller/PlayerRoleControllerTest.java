@@ -1,5 +1,6 @@
 package com.rest.finalapp.controller;
 
+import com.google.gson.Gson;
 import com.rest.finalapp.domain.PlayerRole;
 import com.rest.finalapp.domain.dto.PlayerRoleDto;
 import com.rest.finalapp.mapper.PlayerRoleMapper;
@@ -18,6 +19,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @SpringJUnitConfig
@@ -48,6 +50,24 @@ class PlayerRoleControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(1)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].id", Matchers.is(1)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].name", Matchers.is("role 1")));
+    }
+
+    @Test
+    void shouldCreatePlayerRole() throws Exception {
+        //Given
+        PlayerRoleDto playerRoleDto = new PlayerRoleDto(1L, "role 1");
+        PlayerRole playerRole = new PlayerRole(2L, "role 2");
+        when(playerRoleMapper.mapToPlayerRole(any(PlayerRoleDto.class))).thenReturn(playerRole);
+        Gson gson = new Gson();
+        String jsonContent = gson.toJson(playerRoleDto);
+        //When & Then
+        mockMvc
+                .perform(MockMvcRequestBuilders
+                        .post("/v1/playerRoles")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .characterEncoding("UTF-8")
+                        .content(jsonContent))
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
 }

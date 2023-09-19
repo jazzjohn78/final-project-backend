@@ -1,12 +1,12 @@
 package com.rest.finalapp.controller;
 
+import com.google.gson.Gson;
 import com.rest.finalapp.domain.User;
 import com.rest.finalapp.domain.dto.UserDto;
 import com.rest.finalapp.mapper.UserMapper;
 import com.rest.finalapp.service.DbService;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -81,4 +81,39 @@ class UserControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name", Matchers.is("username1")));
     }
 
+    @Test
+    void shouldCreateUser() throws Exception {
+        //Given
+        UserDto userDto = new UserDto(1L, "name 1", null, null);
+        User user = new User(2L, "name 2");
+        when(userMapper.mapToUser(any(UserDto.class))).thenReturn(user);
+        Gson gson = new Gson();
+        String jsonContent = gson.toJson(userDto);
+        //When & Then
+        mockMvc
+                .perform(MockMvcRequestBuilders
+                        .post("/v1/users")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .characterEncoding("UTF-8")
+                        .content(jsonContent))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    void shouldUpdateUser() throws Exception {
+        //Given
+        UserDto userDto = new UserDto(1L, "name 1", null, null);
+        User user = new User(2L, "name 2");
+        when(userMapper.mapToUser(any(UserDto.class))).thenReturn(user);
+        Gson gson = new Gson();
+        String jsonContent = gson.toJson(userDto);
+        //When & Then
+        mockMvc
+                .perform(MockMvcRequestBuilders
+                        .put("/v1/users")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .characterEncoding("UTF-8")
+                        .content(jsonContent))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
 }
