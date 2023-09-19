@@ -1,6 +1,5 @@
 package com.rest.finalapp.controller;
 
-import com.rest.finalapp.controller.exception.PlayerNotFoundException;
 import com.rest.finalapp.controller.exception.UserNotFoundException;
 import com.rest.finalapp.domain.User;
 import com.rest.finalapp.domain.dto.UserDto;
@@ -44,10 +43,5 @@ public class UserController {
         User user = userMapper.mapToUser(userDto);
         dbService.saveUser(user);
         return ResponseEntity.ok().build();
-    }
-
-    @DeleteMapping(value = "{userId}")
-    public void deleteUser(@PathVariable Long userId) {
-
     }
 }

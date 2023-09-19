@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.util.Date;
 
 @Getter
 @NoArgsConstructor
@@ -20,6 +21,9 @@ public class TeamLog {
     @Column(name = "ID", unique = true)
     private Long id;
 
+    @Column(name = "Date")
+    private Date date;
+
     @Column(name = "TEAM_ID")
     private Long teamId;
 
@@ -29,8 +33,9 @@ public class TeamLog {
     @Column(name = "DETAILS")
     private String details;
 
-    public TeamLog(Long id, Long teamId, String operation, String details) {
+    public TeamLog(Long id, Date date, Long teamId, String operation, String details) {
         this.id = id;
+        this.date = date;
         this.teamId = teamId;
         this.operation = operation;
         this.details = details;

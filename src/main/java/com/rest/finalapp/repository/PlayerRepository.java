@@ -1,7 +1,6 @@
 package com.rest.finalapp.repository;
 
 import com.rest.finalapp.domain.Player;
-import com.rest.finalapp.domain.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

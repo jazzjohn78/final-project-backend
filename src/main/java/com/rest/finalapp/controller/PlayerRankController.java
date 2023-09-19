@@ -25,25 +25,10 @@ public class PlayerRankController {
         return ResponseEntity.ok(playerRankMapper.mapToPlayerRankDtoList(playerRanks));
     }
 
-    @GetMapping(value = "{playerRankId}")
-    public PlayerRankDto getPlayerRank(@PathVariable Long playerRankId) {
-        return new PlayerRankDto(1L, "Master Guardian II");
-    }
-
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> createPlayerRank(@RequestBody PlayerRankDto playerRankDto) {
         PlayerRank playerRank = playerRankMapper.mapToPlayerRank(playerRankDto);
         dbService.saveRank(playerRank);
         return ResponseEntity.ok().build();
-    }
-
-    @PutMapping
-    public PlayerRankDto updatePlayerRank(PlayerRankDto playerRankDto) {
-        return new PlayerRankDto(1L, "Master Guardian II");
-    }
-
-    @DeleteMapping(value = "{playerRankId}")
-    public void deletePlayerRank(@PathVariable Long playerRankId) {
-
     }
 }

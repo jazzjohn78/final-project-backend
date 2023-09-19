@@ -4,14 +4,8 @@ import com.rest.finalapp.controller.exception.PlayerNotFoundException;
 import com.rest.finalapp.controller.exception.TeamNotFoundException;
 import com.rest.finalapp.controller.exception.UserNotFoundException;
 import com.rest.finalapp.domain.*;
-import com.rest.finalapp.domain.logs.LoginLog;
-import com.rest.finalapp.domain.logs.PlayerLog;
-import com.rest.finalapp.domain.logs.TeamLog;
-import com.rest.finalapp.domain.logs.UserLog;
-import com.rest.finalapp.domain.logs.repository.LoginLogRepository;
-import com.rest.finalapp.domain.logs.repository.PlayerLogRepository;
-import com.rest.finalapp.domain.logs.repository.TeamLogRepository;
-import com.rest.finalapp.domain.logs.repository.UserLogRepository;
+import com.rest.finalapp.domain.logs.*;
+import com.rest.finalapp.domain.logs.repository.*;
 import com.rest.finalapp.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,9 +22,9 @@ public class DbService {
     private final PlayerRoleRepository playerRoleRepository;
     private final PlayerRankRepository playerRankRepository;
     private final LoginLogRepository loginLogRepository;
+    private final LoginErrorLogRepository loginErrorLogRepository;
     private final TeamLogRepository teamLogRepository;
     private final PlayerLogRepository playerLogRepository;
-
     private final UserLogRepository userLogRepository;
 
     public List<User> getAllUsers() {
@@ -90,6 +84,10 @@ public class DbService {
 
     public void saveLoginLog(final LoginLog loginLog) {
         loginLogRepository.save(loginLog);
+    }
+
+    public void saveLoginErrorLog(final LoginErrorLog loginErrorLog) {
+        loginErrorLogRepository.save(loginErrorLog);
     }
 
     public void saveTeamLog(final TeamLog teamLog) {

@@ -12,8 +12,8 @@ import java.util.Date;
 
 @Getter
 @NoArgsConstructor
-@Entity(name = "PLAYER_LOG")
-public class PlayerLog {
+@Entity(name = "LOGIN_ERROR_LOG")
+public class LoginErrorLog {
 
     @Id
     @GeneratedValue
@@ -24,20 +24,16 @@ public class PlayerLog {
     @Column(name = "Date")
     private Date date;
 
-    @Column(name = "PLAYER_ID")
-    private Long playerId;
+    @Column(name = "USERNAME")
+    private String username;
 
-    @Column(name = "OPERATION")
-    private String operation;
+    @Column(name = "RESULT")
+    private String result;
 
-    @Column(name = "DETAILS")
-    private String details;
-
-    public PlayerLog(Long id, Date date, Long playerId, String operation, String details) {
+    public LoginErrorLog(Long id, Date date, String username, String result) {
         this.id = id;
         this.date = date;
-        this.playerId = playerId;
-        this.operation = operation;
-        this.details = details;
+        this.username = username;
+        this.result = result;
     }
 }

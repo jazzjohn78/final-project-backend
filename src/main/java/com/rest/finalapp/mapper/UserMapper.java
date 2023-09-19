@@ -2,7 +2,6 @@ package com.rest.finalapp.mapper;
 
 import com.rest.finalapp.controller.exception.PlayerNotFoundException;
 import com.rest.finalapp.controller.exception.TeamNotFoundException;
-import com.rest.finalapp.domain.Player;
 import com.rest.finalapp.domain.User;
 import com.rest.finalapp.domain.dto.UserDto;
 import com.rest.finalapp.service.DbService;

@@ -2,7 +2,6 @@ package com.rest.finalapp.mapper;
 
 import com.rest.finalapp.domain.PlayerRole;
 import com.rest.finalapp.domain.dto.PlayerRoleDto;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

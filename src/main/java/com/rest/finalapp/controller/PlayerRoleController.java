@@ -9,7 +9,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -26,25 +25,10 @@ public class PlayerRoleController {
         return ResponseEntity.ok(playerRoleMapper.mapToPlayerRoleDtoList(playerRoles));
     }
 
-    @GetMapping(value = "{playerRoleId}")
-    public PlayerRoleDto getPlayerRole(@PathVariable Long playerRoleId) {
-        return new PlayerRoleDto(1L, "In Game Leader");
-    }
-
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> createPlayerRole(@RequestBody PlayerRoleDto playerRoleDto) {
         PlayerRole playerRole = playerRoleMapper.mapToPlayerRole(playerRoleDto);
         dbService.saveRole(playerRole);
         return ResponseEntity.ok().build();
-    }
-
-    @PutMapping
-    public PlayerRoleDto updatePlayerRole(PlayerRoleDto playerRoleDto) {
-        return new PlayerRoleDto(1L, "In Game Leader");
-    }
-
-    @DeleteMapping(value = "{playerRoleId}")
-    public void deletePlayerRole(@PathVariable Long playerRoleId) {
-
     }
 }

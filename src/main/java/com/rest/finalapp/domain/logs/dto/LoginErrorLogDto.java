@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Getter
 @AllArgsConstructor
-public class LoginLogDto {
+public class LoginErrorLogDto {
 
     private Long id;
     private Date date;

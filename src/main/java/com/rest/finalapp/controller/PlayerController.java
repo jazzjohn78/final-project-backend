@@ -6,13 +6,10 @@ import com.rest.finalapp.domain.dto.PlayerDto;
 import com.rest.finalapp.mapper.PlayerMapper;
 import com.rest.finalapp.service.DbService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping("/v1/players")
@@ -22,10 +19,6 @@ public class PlayerController {
     private final DbService dbService;
     private final PlayerMapper playerMapper;
 
-    @GetMapping
-    public List<PlayerDto> getPlayers() {
-        return new ArrayList<>();
-    }
 
     @GetMapping(value = "{playerId}")
     public ResponseEntity<PlayerDto> getPlayer(@PathVariable Long playerId) throws PlayerNotFoundException {
